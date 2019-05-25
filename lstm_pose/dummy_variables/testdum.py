@@ -11,6 +11,7 @@ from time import gmtime, strftime
 import tensorflow as tf
 import model
 import numpy as np
+from tqdm import tqdm
 
 import pandas as pd
 from DataLoader import *
@@ -20,7 +21,7 @@ from DataLoader import *
 T = 5
 outclass = 21
 learning_rate = 8e-6
-batch_size = 2
+batch_size = 1
 epochs = 1
 begin_epoch = 0
 save_dir = './ckptdummy0/'
@@ -28,7 +29,8 @@ save_dir = './ckptdummy0/'
 if not os.path.exists(save_dir):
     os.mkdir(save_dir)
 
-
+dataset_train = Feeder(data_dir='./data/', label_dir='./labels/', train=True, temporal=T, joints=outclass)
+dl_train = DataLoader(dataset_train,batch_size)
 
     
                             #***********************Placeholders*********************
@@ -56,7 +58,7 @@ net = model.Net(outclass=outclass,T=T,prob=dropprob)
 predict_heatmaps = net.forward(image, cmap)  # lis of size (temporal + 1 ) * 4D Tensor
 
 #optimizer
-optim = tf.train.AdamOptimizer(learning_rate=0.001, beta1=0.9, beta2=0.999)
+optim = tf.train.AdamOptimizer(learning_rate=learning_rate, beta1=0.9, beta2=0.999)
 
 #loss calculation 
 criterion = tf.losses.mean_squared_error  # loss function MSE  
@@ -112,7 +114,7 @@ def validate(sess, predict_heatmaps):
     sigmas = [(i+1)/100 for i in range(5)]   # set the number of sigmas needed to calculate over
     results =  []
     pck_tot = 0
-    for sigma in sigmas: #going over the sigmas
+    for sigma in tqdm(sigmas): #going over the sigmas
 
     #modify into the sessions process
         result = []  # save sigma and pck
