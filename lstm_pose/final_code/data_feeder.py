@@ -7,6 +7,7 @@ import os
 import numpy as np
 import json
 import cv2
+from tqdm import tqdm
 
 
 class Feeder():
@@ -55,7 +56,8 @@ class Feeder():
         imgs.sort()
 
         img_num = len(imgs)
-        for i in range(0, img_num - self.temporal + 1, step):
+        print("--------------------Preparing Data---------------------------------------")
+        for i in tqdm(range(0, img_num - self.temporal + 1, step)):
             tmp = []
             for k in range(i, i + self.temporal):
                 tmp.append(os.path.join(self.data_dir, imgs[k]))

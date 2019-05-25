@@ -9,6 +9,7 @@ import model
 import numpy as np
 import pandas as pd
 from DataLoader import *
+from tqdm import tqdm
 
 
 
@@ -150,7 +151,7 @@ def validate(dlobj, sess, predict_heatmaps, epoch, save_dir_val):
     results =  []
     pck_tot = 0
 
-    for sigma in sigmas: #going over the sigmas
+    for sigma in tqdm(sigmas): #going over the sigmas
 
         result = []  # save sigma and pck for a particular sigma
         result.append(sigma)
