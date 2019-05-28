@@ -25,6 +25,8 @@ def calc_loss(predict_heatmaps, label_map, criterion, temporal=21):
     return total_loss
 
 
+
+#change to tf operations
 def lstm_pm_evaluation(label_map, predict_heatmaps, sigma=0.04, temporal=5):
     pck_eval = []
     empty = np.zeros((46, 46, 21))                                      # 3D numpy  46 * 46 * 21
@@ -38,6 +40,7 @@ def lstm_pm_evaluation(label_map, predict_heatmaps, sigma=0.04, temporal=5):
     return sum(pck_eval) / float(len(pck_eval))  #
 
 
+#change to tf operations
 def PCK(predict, target, label_size=46, sigma=0.04):
     """
     calculate possibility of correct key point of one single image

@@ -13,6 +13,7 @@ def conv(input,num_input_channels,num_filters,filter_size,padding = 'SAME',bias=
 
         # Create new weights (filters) with the given shape
         weights = tf.Variable(tf.truncated_normal(shape, stddev=0.05),name='w')
+        
 
         # TensorFlow operation conv2D
         layer = tf.nn.conv2d(input=input, filter=weights, strides=[1, 1, 1, 1], padding=padding,data_format='NHWC')
@@ -24,8 +25,11 @@ def conv(input,num_input_channels,num_filters,filter_size,padding = 'SAME',bias=
 
             # Add the biases to the results of the convolution.
             layer = tf.nn.bias_add(layer,biases,data_format='NHWC')
+            tf.summary.histogram('biases',biases)
 
         # return layer, weights
+        tf.summary.histogram("weights",weights)
+        tf.summary.('activation',layer) 
         return layer
 
 

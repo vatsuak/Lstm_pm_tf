@@ -71,7 +71,7 @@ net = model.Net(outclass=outclass,T=T,prob=dropprob)
 predict_heatmaps = net.forward(image, cmap)  # lis of size (temporal + 1 ) * 4D Tensor
 
 #optimizer
-optim = tf.train.AdamOptimizer(learning_rate=0.001, beta1=0.9, beta2=0.999)
+optim = tf.train.AdamOptimizer(learning_rate=learning_rate, beta1=0.9, beta2=0.999)
 
 #loss calculation 
 criterion = tf.losses.mean_squared_error  # loss function MSE  
